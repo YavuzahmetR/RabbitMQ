@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{19E22B8B-8E9B-423A-BC6C-63541E7620FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.App", "RabbitMQ_Console\RabbitMQ.App\RabbitMQ.App.csproj", "{193AB1A6-B2F1-42F1-938C-1516E7D93614}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{193AB1A6-B2F1-42F1-938C-1516E7D93614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{193AB1A6-B2F1-42F1-938C-1516E7D93614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{193AB1A6-B2F1-42F1-938C-1516E7D93614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{193AB1A6-B2F1-42F1-938C-1516E7D93614}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{193AB1A6-B2F1-42F1-938C-1516E7D93614} = {19E22B8B-8E9B-423A-BC6C-63541E7620FC}
+	EndGlobalSection
+EndGlobal
