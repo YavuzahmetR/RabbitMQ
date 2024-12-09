@@ -11,45 +11,23 @@ var factory = new ConnectionFactory
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
 
-await channel.ExchangeDeclareAsync("logs-topic", ExchangeType.Topic, durable: true); //durable : true means exchange will not be deleted after running the program.
+await channel.ExchangeDeclareAsync("header-exchange", ExchangeType.Headers, durable: true); //durable : true means exchange will not be deleted after running the program.
 
-var logNames = Enum.GetNames(typeof(LogNames)).ToList();
+Dictionary<string,object> headers = new Dictionary<string, object>();
+headers.Add("format", "pdf");
+headers.Add("shape", "triangle");
 
-Random rnd = new Random();
-foreach (var x in Enumerable.Range(1, 50))
-{
-    
-    LogNames log1 = (LogNames)rnd.Next(1, 5);
-    LogNames log2 = (LogNames)rnd.Next(1, 5);
-    LogNames log3 = (LogNames)rnd.Next(1, 5);
+BasicProperties basicProperties = new BasicProperties();
+basicProperties.Headers = headers;
 
-    string message = $"log-type: {log1}-{log2}-{log3}";
+var message = Encoding.UTF8.GetBytes("Header Mesajım");
 
-    var messageBody = Encoding.UTF8.GetBytes(message);
-
-    var routeKey = $"{log1}.{log2}.{log3}"; //mandatory spelling syntax 
-
-    await channel.BasicPublishAsync(exchange: "logs-topic", routingKey: routeKey, body: messageBody);
-
-    Console.WriteLine($"Log gönderilmiştir : {message}");
-}
+await channel.BasicPublishAsync(exchange:"header-exchange",routingKey:string.Empty,
+    mandatory:false,basicProperties:basicProperties,body:message);
+Console.WriteLine("selam");
 
 Console.ReadLine();
 
-public enum LogNames
-{
-    Critical = 1,
-    Error = 2,
-    Warning = 3,
-    Info = 4
-}
 
-//foreach (var logName in logNames)
-//{
-//    Random rnd = new Random();
 
-//    var queueName = $"direct-queue-{logName}";
 
-//    await channel.QueueDeclareAsync(queueName, true, false, false);
-//    await channel.QueueBindAsync(queueName, "logs-direct", routeKey, null);
-//}

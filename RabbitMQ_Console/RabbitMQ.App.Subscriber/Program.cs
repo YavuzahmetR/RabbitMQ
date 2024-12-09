@@ -11,7 +11,7 @@ var factory = new ConnectionFactory
 
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
-//await channel.ExchangeDeclareAsync("logs-topic", ExchangeType.Topic, durable: true); write or do not doesn't matter 
+//await channel.ExchangeDeclareAsync("header-exchange", ExchangeType.Headers, durable: true); write or do not doesn't matter 
 
 
 await channel.BasicQosAsync(0, 1, false); // 0 : size could be anything , 1: once at a time send to subscriber , false: do not split messages evenly.
@@ -21,10 +21,14 @@ var queue = await channel.QueueDeclareAsync();
 
 var randomQueueName = queue.QueueName;
 
-//var routeKey = "*.*.Warning"; //* = Could be anything, Ends with Warning.
-var routeKey = "Info.#"; //# = Starts With Info, Continues with anything.
+Dictionary<string, object> headers = new Dictionary<string, object>();
+headers.Add("format", "pdf");
+headers.Add("shape", "triangle");
 
-await channel.QueueBindAsync(randomQueueName, "logs-topic", routeKey);
+headers.Add("x-match", "all"); // There needs to be an exact match in genres between what is sent from the publisher and what the consumer expects.
+//headers.Add("x-match", "any");  At least 1 key value pair of types must match between what is sent from the publisher and what the consumer expects.
+
+await channel.QueueBindAsync(randomQueueName, "header-exchange",string.Empty,headers!);
 
 var consumer = new AsyncEventingBasicConsumer(channel);
 
@@ -37,10 +41,9 @@ Console.WriteLine("Logs Listening...");
 consumer.ReceivedAsync += async (object sender, BasicDeliverEventArgs @event) =>
 {
     var message = Encoding.UTF8.GetString(@event.Body.ToArray());
-    //await Task.Delay(1000);
+    await Task.Delay(1000);
 
     Console.WriteLine("Gelen Mesaj : " + message);
-    // File.AppendAllText("log-critical.txt", message+ "\n"); writing text file
     await channel.BasicAckAsync(deliveryTag: @event.DeliveryTag, multiple: false);
 };
 
