@@ -9,18 +9,19 @@ var factory = new ConnectionFactory
 };
 
 using var connection = await factory.CreateConnectionAsync();
-using var channel = await connection.CreateChannelAsync(); 
+using var channel = await connection.CreateChannelAsync();
 
 
-await channel.QueueDeclareAsync("hello-queue", durable: true, exclusive: false, autoDelete: false);
+await channel.ExchangeDeclareAsync("logs-fanout", ExchangeType.Fanout, durable: true); //durable : true means exchange will not be deleted after running the program.
 
-Enumerable.Range(1, 50).ToList().ForEach(async x =>
+
+foreach (var x in Enumerable.Range(1, 50))
 {
-    string message = "hello world";
+    string message = $"log {x}";
     var messageBody = Encoding.UTF8.GetBytes(message);
-    await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "hello-queue", body: messageBody);
+    await channel.BasicPublishAsync(exchange: "logs-fanout", routingKey: "", body: messageBody);
 
-    Console.WriteLine("Mesaj Gönderildi");
-});
+    Console.WriteLine($"Mesaj Gönderildi {message}");
+}
 
 Console.ReadLine();
