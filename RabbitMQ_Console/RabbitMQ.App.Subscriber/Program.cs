@@ -11,28 +11,35 @@ var factory = new ConnectionFactory
 
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
-//await channel.ExchangeDeclareAsync("logs-fanout", ExchangeType.Direct, durable: true); write or do not doesn't matter 
+//await channel.ExchangeDeclareAsync("logs-topic", ExchangeType.Topic, durable: true); write or do not doesn't matter 
 
 
-var queueName = "direct-queue-Critical";
 await channel.BasicQosAsync(0, 1, false); // 0 : size could be anything , 1: once at a time send to subscriber , false: do not split messages evenly.
 //false wont require new instance of rmq, it pulls from cache
 
+var queue = await channel.QueueDeclareAsync();
 
+var randomQueueName = queue.QueueName;
+
+//var routeKey = "*.*.Warning"; //* = Could be anything, Ends with Warning.
+var routeKey = "Info.#"; //# = Starts With Info, Continues with anything.
+
+await channel.QueueBindAsync(randomQueueName, "logs-topic", routeKey);
 
 var consumer = new AsyncEventingBasicConsumer(channel);
 
-await channel.BasicConsumeAsync(queue: queueName, autoAck: false, consumer: consumer);
+await channel.BasicConsumeAsync(queue: randomQueueName, autoAck: false, consumer: consumer);
 
 //autoAck : instantly delete / See the result first then delete
+
 Console.WriteLine("Logs Listening...");
-int messageCounter = 0;
+
 consumer.ReceivedAsync += async (object sender, BasicDeliverEventArgs @event) =>
 {
     var message = Encoding.UTF8.GetString(@event.Body.ToArray());
     //await Task.Delay(1000);
-    messageCounter++;
-    Console.WriteLine("Gelen Mesaj : " + message +" "+ messageCounter);
+
+    Console.WriteLine("Gelen Mesaj : " + message);
     // File.AppendAllText("log-critical.txt", message+ "\n"); writing text file
     await channel.BasicAckAsync(deliveryTag: @event.DeliveryTag, multiple: false);
 };

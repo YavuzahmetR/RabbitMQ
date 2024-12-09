@@ -11,32 +11,25 @@ var factory = new ConnectionFactory
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
 
-
-//Direct Exchange Needs Route for specifying which queue will it bind to itself for filtering.
-await channel.ExchangeDeclareAsync("logs-direct", ExchangeType.Direct, durable: true); //durable : true means exchange will not be deleted after running the program.
-
+await channel.ExchangeDeclareAsync("logs-topic", ExchangeType.Topic, durable: true); //durable : true means exchange will not be deleted after running the program.
 
 var logNames = Enum.GetNames(typeof(LogNames)).ToList();
 
-foreach (var logName in logNames)
-{
-    var routeKey = $"route-{logName}";
-    var queueName = $"direct-queue-{logName}";
-
-    await channel.QueueDeclareAsync(queueName, true, false, false);
-    await channel.QueueBindAsync(queueName, "logs-direct", routeKey, null);
-}
-
-
-
-
+Random rnd = new Random();
 foreach (var x in Enumerable.Range(1, 50))
 {
-    LogNames log = (LogNames)new Random().Next(1, 5);
-    string message = $"log-type: {log}";
+    
+    LogNames log1 = (LogNames)rnd.Next(1, 5);
+    LogNames log2 = (LogNames)rnd.Next(1, 5);
+    LogNames log3 = (LogNames)rnd.Next(1, 5);
+
+    string message = $"log-type: {log1}-{log2}-{log3}";
+
     var messageBody = Encoding.UTF8.GetBytes(message);
-    var routeKey = $"route-{log}";
-    await channel.BasicPublishAsync(exchange: "logs-direct", routingKey: routeKey, body: messageBody);
+
+    var routeKey = $"{log1}.{log2}.{log3}"; //mandatory spelling syntax 
+
+    await channel.BasicPublishAsync(exchange: "logs-topic", routingKey: routeKey, body: messageBody);
 
     Console.WriteLine($"Log gönderilmiştir : {message}");
 }
@@ -50,3 +43,13 @@ public enum LogNames
     Warning = 3,
     Info = 4
 }
+
+//foreach (var logName in logNames)
+//{
+//    Random rnd = new Random();
+
+//    var queueName = $"direct-queue-{logName}";
+
+//    await channel.QueueDeclareAsync(queueName, true, false, false);
+//    await channel.QueueBindAsync(queueName, "logs-direct", routeKey, null);
+//}
