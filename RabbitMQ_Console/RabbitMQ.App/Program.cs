@@ -1,5 +1,7 @@
-﻿using RabbitMQ.Client;
+﻿using ClassLibrary;
+using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
 
 
 
@@ -19,12 +21,16 @@ headers.Add("shape", "triangle");
 
 BasicProperties basicProperties = new BasicProperties();
 basicProperties.Headers = headers;
+basicProperties.Persistent = true; //ensures that messages are not lost if the broker restarts
 
-var message = Encoding.UTF8.GetBytes("Header Mesajım");
+Product product = new Product(1, "Test", 200, 15);
+string productJsonString = JsonSerializer.Serialize(product);
+byte[] message = Encoding.UTF8.GetBytes(productJsonString);
 
 await channel.BasicPublishAsync(exchange:"header-exchange",routingKey:string.Empty,
     mandatory:false,basicProperties:basicProperties,body:message);
-Console.WriteLine("selam");
+
+Console.WriteLine("mesaj gönderilmiştir");
 
 Console.ReadLine();
 

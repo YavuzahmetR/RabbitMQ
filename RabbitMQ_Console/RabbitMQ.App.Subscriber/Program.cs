@@ -2,6 +2,8 @@
 using RabbitMQ.Client.Events;
 using System.Text;
 using System;
+using ClassLibrary;
+using System.Text.Json;
 
 var factory = new ConnectionFactory
 {
@@ -41,9 +43,12 @@ Console.WriteLine("Logs Listening...");
 consumer.ReceivedAsync += async (object sender, BasicDeliverEventArgs @event) =>
 {
     var message = Encoding.UTF8.GetString(@event.Body.ToArray());
-    await Task.Delay(1000);
 
-    Console.WriteLine("Gelen Mesaj : " + message);
+    Product product = JsonSerializer.Deserialize<Product>(message)!;
+
+    await Task.Delay(1500);
+
+    Console.WriteLine($"Gelen Mesaj : {product.Id} - {product.Name} - {product.Stock} - {product.Price}");
     await channel.BasicAckAsync(deliveryTag: @event.DeliveryTag, multiple: false);
 };
 
