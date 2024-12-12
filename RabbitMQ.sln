@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.App.Subscriber", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "RabbitMQ_Console\ClassLibrary\ClassLibrary.csproj", "{C0F9ABD6-0AE9-46D5-9E82-F78D2181D4EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WaterMark", "WaterMark", "{A7C36472-DE94-4502-97A2-C553083F4B19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ_Watermark.Web", "WaterMarkProject\RabbitMQ_Watermark.Web\RabbitMQ_Watermark.Web.csproj", "{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{C0F9ABD6-0AE9-46D5-9E82-F78D2181D4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0F9ABD6-0AE9-46D5-9E82-F78D2181D4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0F9ABD6-0AE9-46D5-9E82-F78D2181D4EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +45,6 @@ Global
 		{193AB1A6-B2F1-42F1-938C-1516E7D93614} = {19E22B8B-8E9B-423A-BC6C-63541E7620FC}
 		{DABAABD9-3329-44EF-96C2-27ABD18D2565} = {19E22B8B-8E9B-423A-BC6C-63541E7620FC}
 		{C0F9ABD6-0AE9-46D5-9E82-F78D2181D4EF} = {19E22B8B-8E9B-423A-BC6C-63541E7620FC}
+		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE} = {A7C36472-DE94-4502-97A2-C553083F4B19}
 	EndGlobalSection
 EndGlobal
