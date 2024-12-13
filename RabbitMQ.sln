@@ -15,6 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WaterMark", "WaterMark", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ_Watermark.Web", "WaterMarkProject\RabbitMQ_Watermark.Web\RabbitMQ_Watermark.Web.csproj", "{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExcelCreate", "ExcelCreate", "{0D8D019C-9295-46D6-A432-0C3B2FCD3578}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ_Excel.Web", "ExcelProject\RabbitMQ_Excel.Web\RabbitMQ_Excel.Web.csproj", "{8776D7D4-64F6-4F6A-8841-85C3C047459D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkerService", "WorkerService", "{0EED6BDB-3910-4940-B0C9-C2B8CC514D4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateFileWorkerService", "WorkerService\CreateFileWorkerService\CreateFileWorkerService.csproj", "{658C34D5-FF2A-45B8-BACD-632527C60551}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +45,14 @@ Global
 		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8776D7D4-64F6-4F6A-8841-85C3C047459D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8776D7D4-64F6-4F6A-8841-85C3C047459D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8776D7D4-64F6-4F6A-8841-85C3C047459D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8776D7D4-64F6-4F6A-8841-85C3C047459D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658C34D5-FF2A-45B8-BACD-632527C60551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658C34D5-FF2A-45B8-BACD-632527C60551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658C34D5-FF2A-45B8-BACD-632527C60551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658C34D5-FF2A-45B8-BACD-632527C60551}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +62,7 @@ Global
 		{DABAABD9-3329-44EF-96C2-27ABD18D2565} = {19E22B8B-8E9B-423A-BC6C-63541E7620FC}
 		{C0F9ABD6-0AE9-46D5-9E82-F78D2181D4EF} = {19E22B8B-8E9B-423A-BC6C-63541E7620FC}
 		{622FFEED-7F5B-4AEB-9177-61A69E8A5BAE} = {A7C36472-DE94-4502-97A2-C553083F4B19}
+		{8776D7D4-64F6-4F6A-8841-85C3C047459D} = {0D8D019C-9295-46D6-A432-0C3B2FCD3578}
+		{658C34D5-FF2A-45B8-BACD-632527C60551} = {0EED6BDB-3910-4940-B0C9-C2B8CC514D4D}
 	EndGlobalSection
 EndGlobal
